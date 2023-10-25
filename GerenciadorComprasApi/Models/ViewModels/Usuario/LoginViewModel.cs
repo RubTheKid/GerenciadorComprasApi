@@ -11,5 +11,4 @@ public class LoginViewModel
     [MinLength(6, ErrorMessage = "A senha deve conter pelo menos 6 caracteres.")]
     public string Password { get; set; }
 
-    public string? ReturnUrl { get; set; }
 }

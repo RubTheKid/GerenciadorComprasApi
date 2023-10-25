@@ -23,6 +23,9 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("GerenciadorAuthC
 
 
 //configuração do identity
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AuthDbContext>();
+
 builder.Services.Configure<IdentityOptions>(options =>
 {
     options.Password.RequireDigit = true;
