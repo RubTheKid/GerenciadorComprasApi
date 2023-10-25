@@ -7,6 +7,8 @@ public class GerenciadorDbContext : DbContext
 {
     public GerenciadorDbContext(DbContextOptions<GerenciadorDbContext> options) : base(options) { }
 
+    public GerenciadorDbContext() { }
+
     public DbSet<Empresa> Empresas { get; set; }
     //public DbSet<Estoque> Estoques { get; set; }
     public DbSet<Produto> Produtos { get; set; }

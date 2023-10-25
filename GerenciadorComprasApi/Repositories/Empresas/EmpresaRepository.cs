@@ -63,5 +63,10 @@ public class EmpresaRepository : IEmpresaRepository
         return null;
     }
 
+    public async Task<Empresa> GetByCnpjAsync(string cnpj)
+    {
+        return await dbContext.Empresas.FirstOrDefaultAsync(e => e.Cnpj == cnpj);
+    }
+
 
 }

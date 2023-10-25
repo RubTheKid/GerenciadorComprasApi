@@ -9,4 +9,5 @@ public interface IEmpresaRepository
     Task<Empresa> AddAsync(Empresa empresa);
     Task<Empresa> UpdateAsync(Empresa empresa);
     Task<Empresa> DeleteAsync(Guid id);
+    Task<Empresa> GetByCnpjAsync(string cnpj);
 }

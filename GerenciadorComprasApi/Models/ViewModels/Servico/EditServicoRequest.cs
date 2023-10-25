@@ -1,11 +1,9 @@
-﻿namespace GerenciadorComprasApi.Models.Domain;
+﻿namespace GerenciadorComprasApi.Models.ViewModels.Servico;
 
-public class Servico
+public class EditServicoRequest
 {
     public Guid Id { get; set; }
     public string Nome { get; set; }
     public string? Descricao { get; set; }
     public int? PrazoEntrega { get; set; }
-
-    public ICollection<Empresa> Empresas { get; set; }
 }

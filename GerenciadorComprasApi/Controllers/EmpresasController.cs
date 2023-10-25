@@ -17,8 +17,20 @@ public class EmpresasController : ControllerBase
     }
 
     [HttpPost]
+    [ActionName("Add")]
     public async Task<ActionResult> Add(AddEmpresaRequest addEmpresaRequest)
     {
+        if (addEmpresaRequest == null)
+        {
+            return BadRequest("A solicitação não pode ser nula");
+        }
+
+        var empresaExists = await empresaRepository.GetByCnpjAsync(addEmpresaRequest.Cnpj);
+        if (empresaExists != null)
+        {
+            return BadRequest("CNPJ já cadastrado.");
+        }
+        
         var empresa = new Empresa
         {
             Nome = addEmpresaRequest.Nome,
@@ -34,6 +46,7 @@ public class EmpresasController : ControllerBase
     }
 
     [HttpGet]
+    [ActionName("List")]
     public async Task<ActionResult> List()
     {
         var empresas = await empresaRepository.GetAllAsync();
@@ -42,6 +55,7 @@ public class EmpresasController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [ActionName("Get")]
     public async Task<ActionResult> Edit(Guid id)
     {
         var empresa = await empresaRepository.GetAsync(id);
@@ -65,8 +79,14 @@ public class EmpresasController : ControllerBase
     }
 
     [HttpPut]
+    [ActionName("Edit")]
     public async Task<ActionResult> Edit(EditEmpresaRequest getEmpresa)
     {
+        if (getEmpresa == null)
+        {
+            return BadRequest("A solicitação não pode ser nula.");
+        }
+
         var empresa = new Empresa
         {
             Id = getEmpresa.Id,
@@ -81,13 +101,14 @@ public class EmpresasController : ControllerBase
 
         if (updatedEmpresa == null)
         {
-            return BadRequest();
+            return BadRequest("A atualização falhou");
         }
 
         return Ok();
     }
 
     [HttpDelete("{id}")]
+    [ActionName("Delete")]
     public async Task<ActionResult> Delete(Guid id)
     {
         var deleteEmpresa = await empresaRepository.DeleteAsync(id);
