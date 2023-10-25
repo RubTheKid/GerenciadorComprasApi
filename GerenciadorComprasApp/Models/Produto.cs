@@ -2,10 +2,10 @@
 
 public class Produto
 {
-    public Guid Id { get; set; }
-    public string Nome { get; set; }
-    public int Gtin { get; set; }
-    public decimal? Preco { get; set; }
-    public int? EstoqueDisponivel { get; set; }
-    public int? CotaMinima { get; set; }
+    public Guid id { get; set; }
+    public string nome { get; set; }
+    public int gtin { get; set; }
+    public decimal? preco { get; set; }
+    public int? estoqueDisponivel { get; set; }
+    public int? cotaMinima { get; set; }
 }

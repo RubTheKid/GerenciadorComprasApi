@@ -5,12 +5,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddHttpClient<ProdutoService>(client =>
+builder.Services.AddHttpClient<IProdutoService, ProdutoService>(client =>
 {
-    client.BaseAddress = new Uri("https://localhost:7119");
+    client.BaseAddress = new Uri("https://localhost:7119/");
 });
 
-builder.Services.AddScoped<IProdutoService, ProdutoService>();
+//ref https://learn.microsoft.com/pt-br/dotnet/architecture/microservices/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests
+//builder.Services.AddScoped<IProdutoService, ProdutoService>();
 
 var app = builder.Build();
 
