@@ -1,0 +1,53 @@
+﻿@model IEnumerable<GerenciadorComprasApp.Models.Produto>
+@{
+
+}
+<h2>Produtos</h2>
+
+<div class="bg-secondary bg-opacity-10 py-2">
+    <div class="container">
+        <h1>Produtos Cadastrados</h1>
+    </div>
+</div>
+
+<div class="container py-5">
+    @if (Model != null && Model.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    @*<th>Id</th>*@
+                    <th>Nome</th>
+                    <th>Preço</th>
+                    <th>GTIN</th>
+                    <th>Cota Mínima</th>
+                    <th>Estoque Disponível</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var produto in Model)
+                {
+                    <tr>
+                        <td>@produto.Nome</td>
+                        <td>@produto.Preco</td>
+                        <td>@produto.Gtin</td>
+                        <td>@produto.CotaMinima</td>
+                        <td style="color:?@(produto.EstoqueDisponivel <= produto.CotaMinima ? "red":"black")">@produto.EstoqueDisponivel</td>
+                        <td>
+                            <a asp-area="" asp-controller="Produtos" asp-action="Edit" asp-route-id="@produto.Id">Editar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Não há produtos cadastrados.</p>
+
+        <td>
+            <a asp-area="" asp-controller="Produtos" asp-action="Add">Adicionar Produto</a>
+        </td>
+    }
+</div>

@@ -69,6 +69,20 @@ public class EmpresasController : ControllerBase
         return NotFound();
     }
 
+    [HttpGet("cnpj/{cnpj}")]
+    [ActionName("GetByCnpj")]
+    public async Task<IActionResult> GetByCnpj(string cnpj)
+    {
+        var empresa = await empresaRepository.GetByCnpjAsync(cnpj);
+
+        if (empresa != null)
+        {
+            return Ok(empresa);
+        }
+
+        return NotFound();
+    }
+
     [HttpPut]
     [ActionName("Edit")]
     public async Task<ActionResult> Edit(EditEmpresaRequest getEmpresa)
