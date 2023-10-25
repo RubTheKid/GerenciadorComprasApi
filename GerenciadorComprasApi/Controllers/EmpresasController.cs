@@ -1,6 +1,7 @@
 ﻿using GerenciadorComprasApi.Models.Domain;
 using GerenciadorComprasApi.Models.ViewModels.Empresa;
 using GerenciadorComprasApi.Repositories.Empresas;
+using GerenciadorComprasApi.Repositories.Produtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GerenciadorComprasApi.Controllers;
@@ -56,26 +57,16 @@ public class EmpresasController : ControllerBase
 
     [HttpGet("{id}")]
     [ActionName("Get")]
-    public async Task<ActionResult> Edit(Guid id)
+    public async Task<IActionResult> Get(Guid id)
     {
         var empresa = await empresaRepository.GetAsync(id);
 
-        if (empresa == null)
+        if (empresa != null)
         {
-            return NotFound();
+            return Ok(empresa);
         }
 
-        var editEmpresa = new EditEmpresaRequest
-        {
-            Id = empresa.Id,
-            Nome = empresa.Nome,
-            Cnpj = empresa.Cnpj,
-            Email = empresa.Email,
-            InscricaoEstadual = empresa.InscricaoEstadual,
-            InscricaoMunicipal = empresa.InscricaoMunicipal
-        };
-
-        return Ok(editEmpresa);
+        return NotFound();
     }
 
     [HttpPut]

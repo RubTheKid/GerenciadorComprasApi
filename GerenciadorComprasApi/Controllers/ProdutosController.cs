@@ -41,26 +41,18 @@ public class ProdutosController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> Edit(Guid id)
+    public async Task<IActionResult> Get(Guid id)
     {
         var produto = await produtoRepository.GetAsync(id);
 
         if (produto != null)
         {
-            var editProduto = new EditProdutoRequest
-            {
-                Id = produto.Id,
-                Nome = produto.Nome,
-                Gtin = produto.Gtin,
-                Preco = produto.Preco,
-                EstoqueDisponivel = produto.EstoqueDisponivel,
-                CotaMinima = produto.CotaMinima
-            };
-
-            return Ok(editProduto);
+            return Ok(produto);
         }
+
         return NotFound();
     }
+
 
     [HttpPut]
     public async Task<IActionResult> Edit([FromBody] EditProdutoRequest getProduto)
