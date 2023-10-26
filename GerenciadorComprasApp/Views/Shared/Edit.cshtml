@@ -1,0 +1,53 @@
+﻿@model GerenciadorComprasApp.Models.Produto
+@{
+}
+
+<div class="bg-secondary bg-opacity-10 py-2">
+    <div class="container">
+        <h1>Editar Produto</h1>
+    </div>
+</div>
+
+
+
+<div class="container py-5">
+    @if (Model != null)
+    {
+        <form method="post">
+            <div class="mb-3">
+                <label class="form-label">Id</label>
+                <input type="text" id="id" class="form-control" asp-for="id" readonly />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Nome</label>
+                <input type="text" id="nome" class="form-control" asp-for="nome" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Preço</label>
+                <input type="text" id="preco" class="form-control" asp-for="preco" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">GTIN</label>
+                <input type="text" id="gtin" class="form-control" asp-for="gtin" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Cota Mínima</label>
+                <input type="text" id="cotaMinima" class="form-control" asp-for="cotaMinima" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Estoque Disponível</label>
+                <input type="text" id="estoqueDisponivel" class="form-control" asp-for="estoqueDisponivel" />
+            </div>
+            <div class="mb-3">
+                <div class="d-flex">
+                    <button type="submit" class="btn btn-dark">Atualizar</button>
+                    <button class="btn btn-danger ms-2" type="submit" asp-area="" asp-controller="Produtos" asp-action="Delete">Deletar Produto</button>
+                </div>
+            </div>
+        </form>
+    }
+    else
+    {
+        <p>Erro: produto não encontrado</p>
+    }
+</div>

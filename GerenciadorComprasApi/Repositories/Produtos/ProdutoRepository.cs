@@ -35,10 +35,8 @@ public class ProdutoRepository : IProdutoRepository
 
         if (produtoCadastrado == null)
         {
-            throw new Exception("Produto não encontrado");
+            throw new KeyNotFoundException("Produto não encontrado");
         }
-
-
             produtoCadastrado.Nome = produto.Nome;
             produtoCadastrado.Gtin = produto.Gtin;
             produtoCadastrado.Preco = produto.Preco;
@@ -48,7 +46,6 @@ public class ProdutoRepository : IProdutoRepository
             await dbContext.SaveChangesAsync();
 
             return produtoCadastrado;
-
     }
 
 

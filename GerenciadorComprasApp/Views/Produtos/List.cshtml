@@ -39,14 +39,17 @@
                     </tr>
                 }
             </tbody>
+            <td>
+                <a asp-area="" asp-controller="Produtos" asp-action="Add">Adicionar Produto</a>
+            </td>
         </table>
     }
     else
     {
         <p>Não há produtos cadastrados.</p>
 
-        <td>
+      
             <a asp-area="" asp-controller="Produtos" asp-action="Add">Adicionar Produto</a>
-        </td>
+       
     }
 </div>

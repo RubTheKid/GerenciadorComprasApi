@@ -1,7 +1,9 @@
-﻿using GerenciadorComprasApi.Models.Domain;
+﻿using GerenciadorComprasApi.Data;
+using GerenciadorComprasApi.Models.Domain;
 using GerenciadorComprasApi.Models.ViewModels.Produto;
 using GerenciadorComprasApi.Repositories.Produtos;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace GerenciadorComprasApi.Controllers;
 
@@ -54,26 +56,35 @@ public class ProdutosController : ControllerBase
     }
 
 
-    [HttpPut]
-    public async Task<IActionResult> Edit([FromBody] EditProdutoRequest getProduto)
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Edit(Guid id, [FromBody] EditProdutoRequest getProduto)
     {
-        var produto = new Produto
-        {
-            Id = getProduto.Id,
-            Nome = getProduto.Nome,
-            Gtin = getProduto.Gtin,
-            Preco = getProduto.Preco,
-            EstoqueDisponivel = getProduto.EstoqueDisponivel,
-            CotaMinima = getProduto.CotaMinima
-        };
+        try { 
+            var produto = new Produto
+            {
+                Id = getProduto.Id,
+                Nome = getProduto.Nome,
+                Gtin = getProduto.Gtin,
+                Preco = getProduto.Preco,
+                EstoqueDisponivel = getProduto.EstoqueDisponivel,
+                CotaMinima = getProduto.CotaMinima
+            };
+            var req = await produtoRepository.GetAsync(id);
 
-        var updateProduto = await produtoRepository.UpdateAsync(produto);
+            var updateProduto = await produtoRepository.UpdateAsync(produto);
 
-        if (updateProduto == null)
+            if (updateProduto == null)
+            {
+                return BadRequest();
+            }
+
+                return Ok(updateProduto);
+
+            }
+        catch (KeyNotFoundException)
         {
-            return BadRequest();
+            return NotFound();
         }
-        return Ok();
     }
 
     [HttpDelete("{id}")]

@@ -1,4 +1,5 @@
 ﻿using GerenciadorComprasApp.Models;
+
 using System;
 using System.Net.Http;
 using System.Text;
@@ -31,19 +32,23 @@ public class ProdutoService : IProdutoService
 
         return null;
     }
-
-    public async Task<Produto> AddAsync(Produto produto)
+    public async Task<HttpResponseMessage> AddProdutoAsync(Produto novoProduto)
     {
-        var response = await _client.PostAsJsonAsync("api/produtos", produto);
+        string apiUrl = "https://localhost:7119/api/produtos/";
+        
+        var produtoJson = JsonSerializer.Serialize(novoProduto);
+        var content = new StringContent(produtoJson, Encoding.UTF8, "application/json");
 
-        if (response.IsSuccessStatusCode)
-        {
-            return await response.Content.ReadFromJsonAsync<Produto>();
-        }
-
-        throw new Exception("Falha ao adicionar o produto.");
+        var response = await _client.PostAsync(apiUrl, content);
+        return response;
     }
 
 
+    public async Task<HttpResponseMessage> DeleteAsync(Guid id)
+    {
+        string apiUrl = $"https://localhost:7119/api/produtos/{id}";
+        var response = await _client.DeleteAsync(apiUrl);
+        return response;
+    }
 
 }
