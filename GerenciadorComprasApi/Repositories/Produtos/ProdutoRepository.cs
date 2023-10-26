@@ -17,9 +17,9 @@ public class ProdutoRepository : IProdutoRepository
         return await dbContext.Produtos.ToListAsync();
     }
 
-    public async Task<Produto?> GetAsync(Guid id)
+    public async Task<Produto?> GetAsync(string gtin)
     {
-        return await dbContext.Produtos.FirstOrDefaultAsync(x => x.Id == id);
+        return await dbContext.Produtos.FirstOrDefaultAsync(x => x.Gtin == gtin);
     }
 
     public async Task<Produto> AddAsync(Produto produto)
@@ -31,14 +31,14 @@ public class ProdutoRepository : IProdutoRepository
     }
     public async Task<Produto?> UpdateAsync(Produto produto)
     {
-        var produtoCadastrado = await dbContext.Produtos.FindAsync(produto.Id);
+        var produtoCadastrado = await dbContext.Produtos.FindAsync(produto.Gtin);
 
         if (produtoCadastrado == null)
         {
             throw new KeyNotFoundException("Produto não encontrado");
         }
-            produtoCadastrado.Nome = produto.Nome;
-            produtoCadastrado.Gtin = produto.Gtin;
+        produtoCadastrado.Gtin = produto.Gtin;
+        produtoCadastrado.Nome = produto.Nome;
             produtoCadastrado.Preco = produto.Preco;
             produtoCadastrado.EstoqueDisponivel = produto.EstoqueDisponivel;
             produtoCadastrado.CotaMinima = produto.CotaMinima;
@@ -49,9 +49,9 @@ public class ProdutoRepository : IProdutoRepository
     }
 
 
-    public async Task<Produto?> DeleteAsync(Guid id)
+    public async Task<Produto?> DeleteAsync(string gtin)
     {
-        var produtoCadastrado = await dbContext.Produtos.FindAsync(id);
+        var produtoCadastrado = await dbContext.Produtos.FindAsync(gtin);
 
         if (produtoCadastrado == null)
         {

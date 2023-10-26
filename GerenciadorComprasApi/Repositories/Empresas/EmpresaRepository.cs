@@ -18,9 +18,9 @@ public class EmpresaRepository : IEmpresaRepository
         return await dbContext.Empresas.ToListAsync();
     }
 
-    public async Task<Empresa?> GetAsync(Guid id)
+    public async Task<Empresa?> GetAsync(string cnpj)
     {
-        return await dbContext.Empresas.FirstOrDefaultAsync(x => x.Id == id);
+        return await dbContext.Empresas.FirstOrDefaultAsync(x => x.Cnpj == cnpj);
     }
 
     public async Task<Empresa> AddAsync(Empresa empresa)
@@ -32,11 +32,10 @@ public class EmpresaRepository : IEmpresaRepository
     }
     public async Task<Empresa?> UpdateAsync(Empresa empresa)
     {
-        var empresaCadastrada = await dbContext.Empresas.FindAsync(empresa.Id);
+        var empresaCadastrada = await dbContext.Empresas.FindAsync(empresa.Cnpj);
 
         if (empresaCadastrada != null)
         {
-            empresaCadastrada.Nome = empresa.Nome;
             empresaCadastrada.Cnpj = empresa.Cnpj;
             empresaCadastrada.Email = empresa.Email;
             empresaCadastrada.InscricaoEstadual = empresa.InscricaoEstadual;
@@ -49,9 +48,9 @@ public class EmpresaRepository : IEmpresaRepository
         return null;
     }
 
-    public async Task<Empresa?> DeleteAsync(Guid id)
+    public async Task<Empresa?> DeleteAsync(string cnpj)
     {
-        var empresaCadastrada = await dbContext.Empresas.FindAsync(id);
+        var empresaCadastrada = await dbContext.Empresas.FindAsync(cnpj);
 
         if (empresaCadastrada != null)
         {

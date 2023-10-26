@@ -21,9 +21,9 @@ public class ServicoRepository : IServicoRepository
         return servico;
     }
 
-    public async Task<Servico> DeleteAsync(Guid id)
+    public async Task<Servico> DeleteAsync(string codigoServico)
     {
-        var servicoCadastrado = await dbContext.Servicos.FindAsync(id);
+        var servicoCadastrado = await dbContext.Servicos.FindAsync(codigoServico);
 
         if (servicoCadastrado == null) 
         {
@@ -41,9 +41,9 @@ public class ServicoRepository : IServicoRepository
         return await dbContext.Servicos.ToListAsync();
     }
 
-    public async Task<Servico> GetAsync(Guid id)
+    public async Task<Servico> GetAsync(string codigoServico)
     {
-        var servico = await dbContext.Servicos.FirstOrDefaultAsync(x => x.Id == id);
+        var servico = await dbContext.Servicos.FirstOrDefaultAsync(x => x.CodigoServico == codigoServico);
 
         if (servico == null)
         {
@@ -55,13 +55,13 @@ public class ServicoRepository : IServicoRepository
 
     public async Task<Servico> UpdateAsync(Servico servico)
     {
-        var servicoCadastrado = await dbContext.Servicos.FindAsync(servico.Id);
+        var servicoCadastrado = await dbContext.Servicos.FindAsync(servico.CodigoServico);
 
         if (servicoCadastrado == null)
         {
             throw new Exception("Serviço não encontrado");
         }
-       
+            servicoCadastrado.CodigoServico = servico.CodigoServico;
             servicoCadastrado.Nome = servico.Nome;
             servicoCadastrado.Descricao = servico.Descricao;
             servicoCadastrado.PrazoEntrega = servico.PrazoEntrega;

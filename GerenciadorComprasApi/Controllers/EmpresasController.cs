@@ -34,8 +34,8 @@ public class EmpresasController : ControllerBase
         
         var empresa = new Empresa
         {
-            Nome = addEmpresaRequest.Nome,
             Cnpj = addEmpresaRequest.Cnpj,
+            Nome = addEmpresaRequest.Nome,
             Email = addEmpresaRequest.Email,
             InscricaoEstadual = addEmpresaRequest.InscricaoEstadual,
             InscricaoMunicipal = addEmpresaRequest.InscricaoMunicipal
@@ -55,11 +55,11 @@ public class EmpresasController : ControllerBase
         return Ok(empresas);
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{cnpj}")]
     [ActionName("Get")]
-    public async Task<IActionResult> Get(Guid id)
+    public async Task<IActionResult> Get(string cnpj)
     {
-        var empresa = await empresaRepository.GetAsync(id);
+        var empresa = await empresaRepository.GetAsync(cnpj);
 
         if (empresa != null)
         {
@@ -69,19 +69,19 @@ public class EmpresasController : ControllerBase
         return NotFound();
     }
 
-    [HttpGet("cnpj/{cnpj}")]
-    [ActionName("GetByCnpj")]
-    public async Task<IActionResult> GetByCnpj(string cnpj)
-    {
-        var empresa = await empresaRepository.GetByCnpjAsync(cnpj);
+    //[HttpGet("cnpj/{cnpj}")]
+    //[ActionName("GetByCnpj")]
+    //public async Task<IActionResult> GetByCnpj(string cnpj)
+    //{
+    //    var empresa = await empresaRepository.GetByCnpjAsync(cnpj);
 
-        if (empresa != null)
-        {
-            return Ok(empresa);
-        }
+    //    if (empresa != null)
+    //    {
+    //        return Ok(empresa);
+    //    }
 
-        return NotFound();
-    }
+    //    return NotFound();
+    //}
 
     [HttpPut]
     [ActionName("Edit")]
@@ -94,9 +94,9 @@ public class EmpresasController : ControllerBase
 
         var empresa = new Empresa
         {
-            Id = getEmpresa.Id,
-            Nome = getEmpresa.Nome,
             Cnpj = getEmpresa.Cnpj,
+            Nome = getEmpresa.Nome,
+            
             Email = getEmpresa.Email,
             InscricaoEstadual = getEmpresa.InscricaoEstadual,
             InscricaoMunicipal = getEmpresa.InscricaoMunicipal
@@ -112,11 +112,11 @@ public class EmpresasController : ControllerBase
         return Ok();
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{cnpj}")]
     [ActionName("Delete")]
-    public async Task<ActionResult> Delete(Guid id)
+    public async Task<ActionResult> Delete(string cnpj)
     {
-        var deleteEmpresa = await empresaRepository.DeleteAsync(id);
+        var deleteEmpresa = await empresaRepository.DeleteAsync(cnpj);
 
         if (deleteEmpresa == null)
         {

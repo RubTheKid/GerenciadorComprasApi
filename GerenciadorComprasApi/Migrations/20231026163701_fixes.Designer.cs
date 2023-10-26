@@ -4,6 +4,7 @@ using GerenciadorComprasApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GerenciadorComprasApi.Migrations
 {
     [DbContext(typeof(GerenciadorDbContext))]
-    partial class GerenciadorDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231026163701_fixes")]
+    partial class fixes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,8 +27,13 @@ namespace GerenciadorComprasApi.Migrations
 
             modelBuilder.Entity("GerenciadorComprasApi.Models.Domain.Empresa", b =>
                 {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Cnpj")
-                        .HasColumnType("nvarchar(450)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -42,20 +50,24 @@ namespace GerenciadorComprasApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Cnpj");
+                    b.HasKey("Id");
 
                     b.ToTable("Empresas");
                 });
 
             modelBuilder.Entity("GerenciadorComprasApi.Models.Domain.Produto", b =>
                 {
-                    b.Property<string>("Gtin")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("CotaMinima")
                         .HasColumnType("int");
 
                     b.Property<int?>("EstoqueDisponivel")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Gtin")
                         .HasColumnType("int");
 
                     b.Property<string>("Nome")
@@ -65,15 +77,16 @@ namespace GerenciadorComprasApi.Migrations
                     b.Property<decimal?>("Preco")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("Gtin");
+                    b.HasKey("Id");
 
                     b.ToTable("Produtos");
                 });
 
             modelBuilder.Entity("GerenciadorComprasApi.Models.Domain.Servico", b =>
                 {
-                    b.Property<string>("CodigoServico")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Descricao")
                         .HasColumnType("nvarchar(max)");
@@ -85,7 +98,7 @@ namespace GerenciadorComprasApi.Migrations
                     b.Property<int?>("PrazoEntrega")
                         .HasColumnType("int");
 
-                    b.HasKey("CodigoServico");
+                    b.HasKey("Id");
 
                     b.ToTable("Servicos");
                 });

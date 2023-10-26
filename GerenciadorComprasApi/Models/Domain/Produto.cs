@@ -1,12 +1,14 @@
-﻿namespace GerenciadorComprasApi.Models.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace GerenciadorComprasApi.Models.Domain;
 
 public class Produto
 {
-    public Guid Id { get; set; }
+    [Key]
+    public string Gtin { get; set; }
     public string Nome { get; set; }
-    public int Gtin { get; set; }
     public decimal? Preco { get; set; }
     public int? EstoqueDisponivel { get; set; }
     public int? CotaMinima { get; set; }
-    public ICollection<Empresa> Empresas { get; set; }
+    
 }

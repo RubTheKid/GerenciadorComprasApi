@@ -2,8 +2,8 @@
 
 public class AddProdutoRequest
 {
+    public string Gtin { get; set; }
     public string Nome { get; set; }
-    public int Gtin { get; set; }
     public decimal? Preco { get; set; }
     public int? EstoqueDisponivel { get; set; }
     public int? CotaMinima { get; set; }

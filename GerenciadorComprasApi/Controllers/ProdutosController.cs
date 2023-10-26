@@ -23,8 +23,8 @@ public class ProdutosController : ControllerBase
     {
         var produto = new Produto
         {
-            Nome = addProdutoRequest.Nome,
             Gtin = addProdutoRequest.Gtin,
+            Nome = addProdutoRequest.Nome,
             Preco = addProdutoRequest.Preco,
             EstoqueDisponivel = addProdutoRequest.EstoqueDisponivel,
             CotaMinima = addProdutoRequest.CotaMinima
@@ -42,10 +42,10 @@ public class ProdutosController : ControllerBase
         return Ok(produtos);
     }
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> Get(Guid id)
+    [HttpGet("{gtin}")]
+    public async Task<IActionResult> Get(string gtin)
     {
-        var produto = await produtoRepository.GetAsync(id);
+        var produto = await produtoRepository.GetAsync(gtin);
 
         if (produto != null)
         {
@@ -56,20 +56,20 @@ public class ProdutosController : ControllerBase
     }
 
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> Edit(Guid id, [FromBody] EditProdutoRequest getProduto)
+    [HttpPut("{gtin}")]
+    public async Task<IActionResult> Edit(string gtin, [FromBody] EditProdutoRequest getProduto)
     {
         try { 
             var produto = new Produto
             {
-                Id = getProduto.Id,
-                Nome = getProduto.Nome,
                 Gtin = getProduto.Gtin,
+                Nome = getProduto.Nome,
+                
                 Preco = getProduto.Preco,
                 EstoqueDisponivel = getProduto.EstoqueDisponivel,
                 CotaMinima = getProduto.CotaMinima
             };
-            var req = await produtoRepository.GetAsync(id);
+            var req = await produtoRepository.GetAsync(gtin);
 
             var updateProduto = await produtoRepository.UpdateAsync(produto);
 
@@ -87,10 +87,10 @@ public class ProdutosController : ControllerBase
         }
     }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(Guid id)
+    [HttpDelete("{gtin}")]
+    public async Task<IActionResult> Delete(string gtin)
     {
-        var deleteProduto = await produtoRepository.DeleteAsync(id);
+        var deleteProduto = await produtoRepository.DeleteAsync(gtin);
 
         if (deleteProduto == null)
         {

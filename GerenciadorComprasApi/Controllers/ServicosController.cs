@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GerenciadorComprasApi.Controllers;
 
+[Route("api/[controller]")]
+[ApiController]
 public class ServicosController : ControllerBase
 {
     private readonly IServicoRepository servicoRepository;
@@ -21,6 +23,7 @@ public class ServicosController : ControllerBase
     {
         var servico = new Servico
         {
+            CodigoServico = addServicoRequest.CodigoServico,
             Nome = addServicoRequest.Nome,
             Descricao = addServicoRequest.Descricao,
             PrazoEntrega = addServicoRequest.PrazoEntrega,
@@ -39,10 +42,10 @@ public class ServicosController : ControllerBase
         return Ok(servicos);
     }
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> Get(Guid id)
+    [HttpGet("{codigoServico}")]
+    public async Task<IActionResult> Get(string codigoServico)
     {
-        var servico = await servicoRepository.GetAsync(id);
+        var servico = await servicoRepository.GetAsync(codigoServico);
 
         if (servico != null)
         {
@@ -58,7 +61,7 @@ public class ServicosController : ControllerBase
     {
         var servico = new Servico
         {
-            Id = getServico.Id,
+            CodigoServico = getServico.CodigoServico,
             Nome = getServico.Nome,
             Descricao = getServico.Descricao,
             PrazoEntrega = getServico.PrazoEntrega,
@@ -73,10 +76,10 @@ public class ServicosController : ControllerBase
         return Ok();
     }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(Guid id)
+    [HttpDelete("{codigoServico}")]
+    public async Task<IActionResult> Delete(string codigoServico)
     {
-        var deleteServico = await servicoRepository.DeleteAsync(id);
+        var deleteServico = await servicoRepository.DeleteAsync(codigoServico);
 
         if (deleteServico == null)
         {

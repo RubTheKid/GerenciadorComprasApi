@@ -1,11 +1,12 @@
-﻿namespace GerenciadorComprasApi.Models.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace GerenciadorComprasApi.Models.Domain;
 
 public class Servico
 {
-    public Guid Id { get; set; }
+    [Key]
+    public string CodigoServico { get; set; }
     public string Nome { get; set; }
     public string? Descricao { get; set; }
     public int? PrazoEntrega { get; set; }
-
-    public ICollection<Empresa> Empresas { get; set; }
 }
