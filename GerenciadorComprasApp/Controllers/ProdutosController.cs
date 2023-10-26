@@ -68,9 +68,10 @@ public class ProdutosController : Controller
             {
                 var produtoJson = await response.Content.ReadAsStringAsync();
                 var produtoExistente = JsonSerializer.Deserialize<List<Produto>>(produtoJson);
+                var produto = produtoExistente.FirstOrDefault();
+           
 
-                
-                return View("Edit",produtoExistente);
+                return View("Edit",produto);
             }
             else
             {
