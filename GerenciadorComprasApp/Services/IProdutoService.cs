@@ -6,6 +6,6 @@ namespace GerenciadorComprasApp.Services
     {
         Task<IEnumerable<Produto>> GetProdutosAsync();
         Task<HttpResponseMessage> AddProdutoAsync(Produto novoProduto);
-        Task<HttpResponseMessage> DeleteAsync(Guid id);
+        Task<HttpResponseMessage> DeleteAsync(string gtin);
     }
 }

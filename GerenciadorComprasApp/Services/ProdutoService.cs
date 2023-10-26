@@ -44,9 +44,9 @@ public class ProdutoService : IProdutoService
     }
 
 
-    public async Task<HttpResponseMessage> DeleteAsync(Guid id)
+    public async Task<HttpResponseMessage> DeleteAsync(string gtin)
     {
-        string apiUrl = $"https://localhost:7119/api/produtos/{id}";
+        string apiUrl = $"https://localhost:7119/api/produtos/{gtin}";
         var response = await _client.DeleteAsync(apiUrl);
         return response;
     }

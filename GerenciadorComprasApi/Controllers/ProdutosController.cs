@@ -11,11 +11,13 @@ namespace GerenciadorComprasApi.Controllers;
 [ApiController]
 public class ProdutosController : ControllerBase
 {
+    private readonly GerenciadorDbContext context;
     private readonly IProdutoRepository produtoRepository;
 
-    public ProdutosController(IProdutoRepository produtoRepository)
+    public ProdutosController(IProdutoRepository produtoRepository, GerenciadorDbContext context)
     {
         this.produtoRepository = produtoRepository;
+        this.context = context; //verificar depois
     }
 
     [HttpPost]
@@ -56,35 +58,49 @@ public class ProdutosController : ControllerBase
     }
 
 
+    //[HttpPut("{gtin}")]
+    //public async Task<IActionResult> Edit(string gtin, [FromBody] EditProdutoRequest getProduto)
+    //{
+    //    try { 
+    //        var produto = new Produto
+    //        {
+    //            Gtin = getProduto.Gtin,
+    //            Nome = getProduto.Nome,
+
+    //            Preco = getProduto.Preco,
+    //            EstoqueDisponivel = getProduto.EstoqueDisponivel,
+    //            CotaMinima = getProduto.CotaMinima
+    //        };
+    //        var req = await produtoRepository.GetAsync(gtin);
+
+    //        var updateProduto = await produtoRepository.UpdateAsync(produto);
+
+    //        if (updateProduto == null)
+    //        {
+    //            return BadRequest();
+    //        }
+
+    //            return Ok(updateProduto);
+
+    //        }
+    //    catch (KeyNotFoundException)
+    //    {
+    //        return NotFound();
+    //    }
+    //}
+
     [HttpPut("{gtin}")]
-    public async Task<IActionResult> Edit(string gtin, [FromBody] EditProdutoRequest getProduto)
+    [ActionName("Edit")]
+    public ActionResult Put(string gtin, [FromBody] Produto produto)
     {
-        try { 
-            var produto = new Produto
-            {
-                Gtin = getProduto.Gtin,
-                Nome = getProduto.Nome,
-                
-                Preco = getProduto.Preco,
-                EstoqueDisponivel = getProduto.EstoqueDisponivel,
-                CotaMinima = getProduto.CotaMinima
-            };
-            var req = await produtoRepository.GetAsync(gtin);
-
-            var updateProduto = await produtoRepository.UpdateAsync(produto);
-
-            if (updateProduto == null)
-            {
-                return BadRequest();
-            }
-
-                return Ok(updateProduto);
-
-            }
-        catch (KeyNotFoundException)
+        if (gtin != produto.Gtin)
         {
-            return NotFound();
+            return BadRequest();
         }
+
+        context.Entry(produto).State = EntityState.Modified;
+        context.SaveChanges();
+        return Ok();
     }
 
     [HttpDelete("{gtin}")]

@@ -38,9 +38,9 @@ public class ProdutosController : Controller
             return View("Add", novoProduto);
     }
 
-    public async Task<IActionResult> Delete(Guid id)
+    public async Task<IActionResult> Delete(string gtin)
     {
-        var response = await _produtoService.DeleteAsync(id);
+        var response = await _produtoService.DeleteAsync(gtin);
 
         if (response.IsSuccessStatusCode)
         {
@@ -49,16 +49,16 @@ public class ProdutosController : Controller
         else
         {
             var error = await response.Content.ReadAsStringAsync();
-            return View("Edit", id);
+            return View("Edit", gtin);
         }
     }
 
 
     [HttpGet]
-    public async Task<IActionResult> Edit(Guid id)
+    public async Task<IActionResult> Edit(string gtin)
     {
         // Recupere o produto existente da API usando seu ID
-        string apiUrl = $"https://localhost:7119/api/produtos/{id}";
+        string apiUrl = $"https://localhost:7119/api/produtos/{gtin}";
 
         using (var client = new HttpClient())
         {
@@ -67,7 +67,7 @@ public class ProdutosController : Controller
             if (response.IsSuccessStatusCode)
             {
                 var produtoJson = await response.Content.ReadAsStringAsync();
-                var produtoExistente = JsonSerializer.Deserialize<Produto>(produtoJson);
+                var produtoExistente = JsonSerializer.Deserialize<List<Produto>>(produtoJson);
 
                 
                 return View("Edit",produtoExistente);
@@ -83,7 +83,7 @@ public class ProdutosController : Controller
     [HttpPut]
     public async Task<IActionResult> Edit(Produto produto)
     {
-        string apiUrl = $"https://localhost:7119/api/produtos/{produto.id}";
+        string apiUrl = $"https://localhost:7119/api/produtos/{produto.gtin}";
 
         // Serializa o produto atualizado para JSON
         var produtoJson = JsonSerializer.Serialize(produto);

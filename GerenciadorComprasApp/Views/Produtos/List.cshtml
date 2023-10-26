@@ -34,7 +34,7 @@
                         <td>@produto.cotaMinima</td>
                         <td style="color:@(produto.estoqueDisponivel < produto.cotaMinima ? "red":"black")">@produto.estoqueDisponivel</td>
                         <td>
-                            <a asp-area="" asp-controller="Produtos" asp-action="Edit" asp-route-id="@produto.id">Editar</a>
+                            <a asp-area="" asp-controller="Produtos" asp-action="Edit" asp-route-id="@produto.gtin">Editar</a>
                         </td>
                     </tr>
                 }
