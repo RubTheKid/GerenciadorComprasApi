@@ -23,4 +23,8 @@
     <None Include="Views\Produtos\Edit.cshtml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Empresas\" />
+  </ItemGroup>
+
 </Project>

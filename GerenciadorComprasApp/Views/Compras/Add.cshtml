@@ -3,3 +3,31 @@
 *@
 @{
 }
+<form method="post">
+    <div class="form-group">
+        <label for="CodigoPedido">Código do Pedido:</label>
+        <input type="text" id="CodigoPedido" name="CodigoPedido" class="form-control" asp-for="CodigoPedido">
+    </div>
+
+    <div class="form-group">
+        <label for="Produto">Buscar Produto:</label>
+        <input type="text" id="Produto" name="Produto" class="form-control" asp-for="Produto">
+        <button type="button" id="BuscarProduto" class="btn btn-primary">Buscar Produto</button>
+        
+    </div>
+
+    <div class="form-group">
+        <label for="Fornecedor">Buscar Fornecedor:</label>
+        <input type="text" id="Fornecedor" name="Fornecedor" class="form-control" asp-for="Fornecedor">
+        <button type="button" id="BuscarFornecedor" class="btn btn-primary">Buscar Fornecedor</button>
+        
+    </div>
+
+    <button type="submit" class="btn btn-success">Adicionar Pedido de Compras</button>
+</form>
+
+
+<div id="resultadoProdutos">
+</div>
+<div id="resultadoFornecedores">
+    </div>

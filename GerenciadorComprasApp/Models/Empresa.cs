@@ -2,9 +2,9 @@
 
 public class Empresa
 {
-    public string Cnpj { get; set; }
-    public string Nome { get; set; }
-    public string? Email { get; set; }
-    public string InscricaoEstadual { get; set; }
-    public string InscricaoMunicipal { get; set; }
+    public string cnpj { get; set; }
+    public string nome { get; set; }
+    public string? email { get; set; }
+    public string inscricaoEstadual { get; set; }
+    public string inscricaoMunicipal { get; set; }
 }

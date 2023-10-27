@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace GerenciadorComprasApp.Controllers
+namespace GerenciadorComprasApp.Controllers;
+
+public class ComprasController : Controller
 {
-    public class ComprasController : Controller
+    public IActionResult Index()
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        return View();
     }
 }
